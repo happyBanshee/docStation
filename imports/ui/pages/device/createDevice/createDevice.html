@@ -1,0 +1,66 @@
+<template name="createDevice">
+    <br>
+    <div class="container">
+        <div class="col-md-6 well"> <!-- Form for device creation -->
+            <h3>Create new device:</h3>
+            <form id="createDevice">
+                <div class="form-group">
+                    <label for="name">Device Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Google Nexus 7">
+                </div>
+                <div class="row">
+                    <div class="col-md-4" id="os">
+                        <strong>Device OS:</strong>
+                        {{#each deviceOS}}
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="os" id="{{this}}" value="{{this}}">
+                                    {{capitalize this}}
+                                </label>
+                            </div>
+                        {{/each}}
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="version">OS version:</label>
+                            <input type="text" id="version" name="version" placeholder="6.0.1" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <strong>Device Type:</strong>
+                <p id="type">
+                    <label class="radio-line">
+                        <input type="radio" name="type" id="desktop" value="desktop">
+                        Desktop
+                    </label>
+                    <label class="radio-line">
+                        <input type="radio" name="type" id="tablet" value="tablet">
+                        Tablet
+                    </label>
+                    <label class="radio-line">
+                        <input type="radio" name="type" id="phone" value="phone">
+                        Phone
+                    </label>
+                </p>
+                <strong>Office to which device belongs to:</strong>
+                <p>
+                    <select name="office" id="office" class="form-control">
+                        {{#each offices}}
+                            <option value="{{this}}">{{capitalize this}}</option>
+                        {{/each}}
+                    </select>
+                </p>
+                <button class="btn btn-primary pull-right" type="submit">Create</button>
+            </form>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-5 well"> <!-- List of existing devices -->
+            <h3>Device List:</h3>
+            <div class="list-group">
+                {{#each devices}}
+                    <a href="/device/{{_id}}" class="list-group-item">{{name}}</a>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,39 @@
+import {Meteor} from 'meteor/meteor';
+import {sAlert} from 'meteor/juliancwirko:s-alert';
+import { ReactiveDict } from 'meteor/reactive-dict';
+import { Accounts } from 'meteor/accounts-base';
+
+Template.loginPage.events({
+    "submit form#createUser": function(event){
+        event.preventDefault();
+        var email = event.target.email.value;
+        var password = event.target.password.value;
+        var pin = Math.floor((Math.random() * 800) + 100);
+        while(Meteor.users.find({"profile.pin":pin}).fetch().length != 0){
+            pin = Math.floor((Math.random() * 800) + 100);
+        }
+        Accounts.createUser({email:email,password: password, profile: {pin:pin}},function(err){
+            if(err) sAlert.error(err.message);
+            else{
+                Router.go("/");
+            }
+        });
+    },
+    "submit form#loginUser": function(event){
+        event.preventDefault();
+        var email = event.target.email.value;
+        var password = event.target.password.value;
+        Meteor.loginWithPassword({email: email}, password,function(err){
+            if(err) sAlert.error(err.message);
+            else{
+                Router.go("/");
+            }
+        });
+    },
+    "click a#createAcc": function(event, instance){
+        instance.state.set("isCreateAccount",true);
+    },
+    "click a#loginLink": function(event, instance){
+        instance.state.set("isCreateAccount",false);
+    }
+});
