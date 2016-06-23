@@ -1,5 +1,6 @@
 export const OFFICES = [
     'warszawa kasprzaka',
     'dnipro',
-    'kharkiv'
+    'kharkiv',
+    'krakow'
 ];
